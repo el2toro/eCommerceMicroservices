@@ -7,6 +7,7 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(assembly);
     // Configure Mediator pipeline to be trigered befor handler
     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 
 builder.Services.AddValidatorsFromAssembly(assembly);
