@@ -4,14 +4,14 @@ using BuildingBlocks.Behaviors;
 var builder = WebApplication.CreateBuilder(args);
 
 //Add services to the container
-builder.Services.AddTransient<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(assembly);
     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-    config.AddBehavior(typeof(LoggingBehavior<,>));
+    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 
 builder.Services.AddMarten(options =>

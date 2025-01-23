@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Basket.API.Basket.DeleteBasket;
+﻿namespace Basket.API.Basket.DeleteBasket;
 
 public record DeleteBasketCommand(string UserName) : IQuery<DeletBasketResult>;
 public record DeletBasketResult(bool IsSuccess);
@@ -13,10 +11,13 @@ public class DeleteBasketCommandValidator : AbstractValidator<DeleteBasketComman
     }
 }
 
-internal class DeleteBasketCommandHandler : IQueryHandler<DeleteBasketCommand, DeletBasketResult>
+internal class DeleteBasketCommandHandler(IBasketRepository repository)
+    : IQueryHandler<DeleteBasketCommand, DeletBasketResult>
 {
     public async Task<DeletBasketResult> Handle(DeleteBasketCommand command, CancellationToken cancellationToken)
     {
+        await repository.DeleteBasket(command.UserName, cancellationToken);
+
         return new DeletBasketResult(true);
     }
 }
