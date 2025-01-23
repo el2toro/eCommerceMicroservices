@@ -19,12 +19,8 @@ internal class DeleteProductCommandHandler
     {
         logger.LogInformation("DeleteProductCommandHandler.Handle called with command {@Command}", command);
 
-        var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
-
-        if (product is null)
-        {
-            throw new ProductNotFoundException();
-        }
+        var product = await session.LoadAsync<Product>(command.Id, cancellationToken) ??
+            throw new ProductNotFoundException(command.Id);
 
         session.Delete(product);
         await session.SaveChangesAsync(cancellationToken);
