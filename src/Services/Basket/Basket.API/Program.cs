@@ -1,5 +1,6 @@
 using Basket.API.Data;
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Exceptions.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +23,12 @@ builder.Services.AddMarten(options =>
 
 builder.Services.AddCarter();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 //Configure the HTTP request pipeline
 app.MapCarter();
+app.UseExceptionHandler(option => { });
 
 app.Run();
