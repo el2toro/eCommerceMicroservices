@@ -10,25 +10,19 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 {
     public CreateProductCommandValidator()
     {
-        RuleFor(x => x.Name).NotEmpty().WithMessage("Parameter Name is required.");
-        RuleFor(x => x.Description).NotEmpty().WithMessage("Parameter Description is required.");
-        RuleFor(x => x.ImageFile).NotEmpty().WithMessage("Parameter ImageFile is required.");
-        RuleFor(x => x.Price).GreaterThan(0).WithMessage("Parameter Price should be greater than 0.");
+        RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required.");
+        RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required.");
+        RuleFor(x => x.ImageFile).NotEmpty().WithMessage("ImageFile is required.");
+        RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price should be greater than 0.");
     }
 }
 internal class CreateProductCommandHandler
-    (IDocumentSession session, IValidator<CreateProductCommand> validator)
+    (IDocumentSession session, ILogger<CreateProductCommandHandler> logger)
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        var result = await validator.ValidateAsync(command);
-        var errors = result.Errors.Select(e => e.ErrorMessage).ToList();
-
-        if (errors.Any())
-        {
-            throw new ValidationException(errors.FirstOrDefault());
-        }
+        logger.LogInformation("CreateProductCommandHandler.Handle called with command {@Command}", command);
 
         var product = new Product
         {
