@@ -10,6 +10,12 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 //Decorate with Scrutor library
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    //options.InstanceName = "Basket";
+});
+
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
 {
