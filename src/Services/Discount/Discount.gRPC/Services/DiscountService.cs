@@ -41,9 +41,20 @@ public class DiscountService
     }
 
 
-    public override Task<CouponModel> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
+    public override async Task<CouponModel> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
     {
-        return base.UpdateDiscount(request, context);
+        var coupon = request.Adapt<Coupon>();
+        if (coupon is null)
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid request object"));
+
+        discountContext.Coupones.Update(coupon);
+        await discountContext.SaveChangesAsync();
+
+        logger.LogInformation("Discount updated succesfully. ProductName: {productName}", coupon.ProductName);
+
+        var couponModel = coupon.Adapt<CouponModel>();
+
+        return couponModel;
     }
 
     public override Task<DeleteDiscountResponse> DeleteDiscount(DeleteDiscountRequest request, ServerCallContext context)
