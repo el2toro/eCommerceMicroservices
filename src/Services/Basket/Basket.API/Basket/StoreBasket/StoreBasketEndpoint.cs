@@ -8,6 +8,8 @@ public class StoreBasketEndpoint : ICarterModule
     {
         app.MapPost("/basket", async (StoreBasketRequest request, ISender sender) =>
         {
+            //TODO: comunicate with Discount.gRPC to get latest prices of products
+
             var command = request.Adapt<StoreBasketCommand>();
             var result = await sender.Send(command);
             var response = result.Adapt<StoreBasketResponse>();

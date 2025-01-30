@@ -1,6 +1,6 @@
-using Basket.API.Data;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
+using Discount.gRPC;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
@@ -8,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Add services to the container
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+});
 
 //Decorate with Scrutor library
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
