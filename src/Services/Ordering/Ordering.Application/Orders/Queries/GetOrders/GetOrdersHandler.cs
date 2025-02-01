@@ -1,6 +1,4 @@
-﻿using BuildingBlocks.Pagination;
-
-namespace Ordering.Application.Orders.Queries.GetOrders;
+﻿namespace Ordering.Application.Orders.Queries.GetOrders;
 
 public class GetOrdersHandler(IApplicationDbContext dbContext)
     : IQueryHandler<GetOrdersQuery, GetOrdersResult>
@@ -9,7 +7,7 @@ public class GetOrdersHandler(IApplicationDbContext dbContext)
     {
         int pageIndex = query.PaginationRequest.PageIndex;
         int pageSize = query.PaginationRequest.PageSize;
-        var totalCount = await dbContext.Orders.LongCountAsync();
+        long totalCount = await dbContext.Orders.LongCountAsync();
 
         var orders = await dbContext.Orders
             .Include(o => o.OrderItems)
@@ -20,7 +18,7 @@ public class GetOrdersHandler(IApplicationDbContext dbContext)
 
         return new GetOrdersResult(new PaginatedResult<OrderDto>(
             pageIndex,
-            pageSize, 
+            pageSize,
             totalCount,
             orders.ToOrderDtoList()
             ));
