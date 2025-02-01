@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Order\Commands\DeleteOrder\" />
 		<Folder Include="Order\EventHandlers\" />
 		<Folder Include="Order\Queries\" />
 	</ItemGroup>
