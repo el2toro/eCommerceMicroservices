@@ -1,8 +1,8 @@
 ﻿namespace BuildingBlocks.Messaging.Events;
 
-public record BacketCheckoutEvent : IntegrationEvent
+public record BasketCheckoutEvent : IntegrationEvent
 {
-    public string Name { get; set; } = default!;
+    public string UserName { get; set; } = default!;
     public Guid CustometId { get; set; } = default!;
     public decimal TotalPrice { get; set; } = default!;
 

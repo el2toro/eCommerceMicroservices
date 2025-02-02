@@ -32,7 +32,7 @@ public class CheckoutBasketHandler
             return new CheckoutBasketResult(false);
         }
 
-        var eventMessage = command.CheckoutBasketDto.Adapt<BacketCheckoutEvent>();
+        var eventMessage = command.CheckoutBasketDto.Adapt<BasketCheckoutEvent>();
         eventMessage.TotalPrice = basket.TotalPrice;
 
         await publishEndpoint.Publish(eventMessage, cancellationToken);
