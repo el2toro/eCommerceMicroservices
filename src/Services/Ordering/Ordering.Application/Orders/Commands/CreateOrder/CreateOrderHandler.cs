@@ -17,13 +17,13 @@ public class CreateOrderHandler
     private Domain.Models.Order CreateNewOrder(OrderDto orderDto)
     {
         var shippingAddress = Address.Of(
-            orderDto.SippingAddress.FirstName,
-            orderDto.SippingAddress.LastName,
-            orderDto.SippingAddress.EmailAddress,
-            orderDto.SippingAddress.AddressLine,
-            orderDto.SippingAddress.Country,
-            orderDto.SippingAddress.State,
-            orderDto.SippingAddress.ZipCode);
+            orderDto.ShippingAddress.FirstName,
+            orderDto.ShippingAddress.LastName,
+            orderDto.ShippingAddress.EmailAddress,
+            orderDto.ShippingAddress.AddressLine,
+            orderDto.ShippingAddress.Country,
+            orderDto.ShippingAddress.State,
+            orderDto.ShippingAddress.ZipCode);
 
         var billingAddress = Address.Of(
             orderDto.BillingAddress.FirstName,
