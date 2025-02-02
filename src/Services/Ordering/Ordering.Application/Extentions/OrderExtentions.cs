@@ -4,11 +4,21 @@ public static class OrderExtentions
 {
     public static IEnumerable<OrderDto> ToOrderDtoList(this IEnumerable<Domain.Models.Order> orders)
     {
-        return orders.Select(order => new OrderDto(
+        return orders.Select(order => DtoFromOrder(order));
+    }
+
+    public static OrderDto ToOrderDto(this Order order)
+    {
+        return DtoFromOrder(order);
+    }
+
+    private static OrderDto DtoFromOrder(Order order)
+    {
+        return new OrderDto(
             Id: order.Id.Value,
                 CustometId: order.CustomerId.Value,
                 OrderName: order.OrderName.Value,
-                SippingAddress: new AddresDto(
+                ShippingAddress: new AddresDto(
                     order.ShippingAddress.FirstName,
                     order.ShippingAddress.LastName,
                     order.ShippingAddress.EmailAddress,
@@ -35,6 +45,6 @@ public static class OrderExtentions
                     ),
                 Status: order.Status,
                 OrderItems: order.OrderItems.Select(oi => new OrderItemDto(oi.OrderId.Value, oi.ProductId.Value, oi.Quantity, oi.Price)).ToList()
-            ));
+            );
     }
 }
