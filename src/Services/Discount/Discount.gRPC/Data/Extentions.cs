@@ -8,7 +8,7 @@ public static class Extentions
     {
 
         var scope = app.ApplicationServices.CreateScope();
-        var dbContext = app.ApplicationServices.GetRequiredService<DiscountContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<DiscountContext>();
         dbContext.Database.MigrateAsync();
 
         return app;
