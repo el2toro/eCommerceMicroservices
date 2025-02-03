@@ -7,7 +7,7 @@ public interface IBasketService
     [Get("/basket-service/basket/{userName}")]
     Task<GetBasketResponse> GetBasket(string userName);
 
-    [Get("/basket-service/basket/{userName}")]
+    [Get("/basket-service/basket")]
     Task<StoreBasketResponse> StoreBasket(StoreBasketRequest request);
 
     [Get("/basket-service/basket/{userName}")]
