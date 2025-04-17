@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/el2toro/eCommerceMicroservices.git'
+            }
+        }
 
         stage('Build & Deploy with Docker Compose') {
             steps {
