@@ -1,6 +1,8 @@
 pipeline {
     agent any
 
+    stages {
+
         stage('Build & Deploy with Docker Compose') {
             steps {
                 script {
