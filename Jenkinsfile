@@ -11,9 +11,13 @@ pipeline {
         stage('Build & Deploy with Docker Compose') {
             steps {
                 script {
-                    bat 'docker-compose -f src/docker-compose.override.yml down'
-                    bat 'docker-compose -f src/docker-compose.override.yml build'
-                    bat 'docker-compose -f src/docker-compose.override.yml up -d'
+                    
+                     bat '''
+                         cd src
+                         docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+                         docker-compose -f docker-compose.yml -f docker-compose.override.yml build
+                         docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+                         '''
                 }
             }
         }
