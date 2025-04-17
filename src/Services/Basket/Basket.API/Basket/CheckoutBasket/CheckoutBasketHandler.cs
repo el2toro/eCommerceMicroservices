@@ -1,5 +1,4 @@
 ﻿using BuildingBlocks.Messaging.Events;
-using FluentValidation;
 using MassTransit;
 
 namespace Basket.API.Basket.CheckoutBasket;
